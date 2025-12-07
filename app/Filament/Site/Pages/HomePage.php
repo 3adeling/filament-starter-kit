@@ -16,7 +16,7 @@ class HomePage extends Page
 
     protected static ?int $navigationSort = -2;
 
-    protected static string | BackedEnum | null $navigationIcon = Heroicon::Home;
+    protected static string | BackedEnum | null $navigationIcon = Heroicon::OutlinedHome;
 
     protected ?string $heading = '';
 

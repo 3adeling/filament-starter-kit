@@ -7,10 +7,12 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Support\Icons\Heroicon;
 use Filament\View\PanelsRenderHook;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
@@ -48,7 +50,10 @@ class SitePanelProvider extends PanelProvider
                 AccountWidget::class,
                 FilamentInfoWidget::class,
             ])
-            ->renderHook(PanelsRenderHook::GLOBAL_SEARCH_AFTER, fn () => view('filament.site.panel.global-search-after'))
+            ->renderHook(PanelsRenderHook::GLOBAL_SEARCH_AFTER, fn (): string => view('filament.site.partials.global-search-after')->render())
+            ->renderHook(PanelsRenderHook::HEAD_END, fn (): string => view('filament.site.partials.head-end')->render())
+            ->renderHook(PanelsRenderHook::BODY_END, fn (): string => view('filament.site.partials.body-end')->render())
+            // you can add more render hooks here ex. PanelsRenderHook::FOOTER, PanelsRenderHook::SCRIPTS_BEFORE or PanelsRenderHook::SCRIPTS_AFTERU
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -60,6 +65,23 @@ class SitePanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
-            ->viteTheme('resources/css/filament/site/theme.css');
+            ->viteTheme('resources/css/filament/site/theme.css')
+            ->navigationItems([
+                NavigationItem::make('login')
+                    ->label(fn (): string => __('Login'))
+                    ->url(fn (): string => route('filament.site.auth.login'))
+                    ->icon(Heroicon::OutlinedArrowLeftEndOnRectangle)
+                    ->hidden(fn (): bool => auth()->check()),
+                NavigationItem::make('register')
+                    ->label(fn (): string => __('Join Us'))
+                    ->url(fn (): string => route('filament.site.auth.register'))
+                    ->icon(Heroicon::OutlinedUserPlus)
+                    ->hidden(fn (): bool => auth()->check()),
+                NavigationItem::make('dashboard')
+                    ->label(fn (): string => __('Dashboard'))
+                    ->url(fn (): string => route('filament.app.pages.dashboard'))
+                    ->icon(Heroicon::OutlinedChartBarSquare)
+                    ->hidden(fn (): bool => ! auth()->check()),
+            ]);
     }
 }
