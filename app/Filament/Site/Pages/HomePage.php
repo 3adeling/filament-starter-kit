@@ -36,4 +36,9 @@ class HomePage extends Page
     {
         return 3;
     }
+
+    public static function isEmailVerificationRequired(Panel $panel): bool
+    {
+        return false;
+    }
 }
