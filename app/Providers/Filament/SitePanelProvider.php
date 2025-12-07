@@ -3,12 +3,10 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Site\Pages\HomePage;
-use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\NavigationItem;
-use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -43,7 +41,7 @@ class SitePanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Site/Resources'), for: 'App\Filament\Site\Resources')
             ->discoverPages(in: app_path('Filament/Site/Pages'), for: 'App\Filament\Site\Pages')
             ->pages([
-                HomePage::class
+                HomePage::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Site/Widgets'), for: 'App\Filament\Site\Widgets')
             ->widgets([
