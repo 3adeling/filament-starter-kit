@@ -12,4 +12,8 @@
     .fi-topbar-item:has(a[href*="register"]) {
         display: none !important;
     }
+
+    .fi-topbar-item:has(a[href*="app"]) {
+        display: none !important;
+    }
 }

@@ -12,6 +12,8 @@ class HomePage extends Page
 {
     protected string $view = 'filament.site.pages.home-page';
 
+    protected static ?string $slug = 'home';
+
     protected static string $routePath = '/';
 
     protected static ?int $navigationSort = -2;
