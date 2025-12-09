@@ -27,6 +27,11 @@ class HomePage extends Page
         return static::$routePath;
     }
 
+    public static function getNavigationLabel(): string
+    {
+        return __('Home');
+    }
+
     protected function getHeaderWidgets(): array
     {
         return [
